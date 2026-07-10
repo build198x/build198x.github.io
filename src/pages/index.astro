@@ -1,0 +1,403 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const tools = [
+  {
+    name: 'build198x',
+    kind: 'Pipeline CLI',
+    blurb:
+      'One tool from authored assets to machine-ready data: convert PNGs to Spectrum SCREEN$, C64 Koala and Art Studio, and Amiga ILBM; render beeper phrases; master bootable disks.',
+    install: 'Prebuilt binary on GitHub Releases',
+    href: 'https://github.com/build198x/build198x',
+  },
+  {
+    name: 'build198x-adf',
+    kind: 'Standalone ADF tool',
+    blurb:
+      'Master a hunk executable into a bootable Amiga floppy, build arbitrary OFS/FFS volumes, verify a disk’s integrity, and inspect its contents — the ADF half of the pipeline, on its own.',
+    install: 'cargo install build198x-adf',
+    href: 'https://crates.io/crates/build198x-adf',
+  },
+  {
+    name: 'format-commodore-amiga-adf',
+    kind: 'ADF library (Rust)',
+    blurb:
+      'Read and write Amiga ADF disk images: a panic-free reader, a general volume builder, deterministic byte-stable output. Powers both tools above and stands alone as a crate.',
+    install: 'A dependency for your own tools',
+    href: 'https://crates.io/crates/format-commodore-amiga-adf',
+  },
+];
+---
+
+<BaseLayout
+  title="Build198x"
+  description="Build198x is the 198x family's build-tools pipeline: convert art and audio, pack data, and master native disk and cartridge images that real hardware boots."
+>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Build-tools pipeline</p>
+          <h1>Build198x</h1>
+          <p class="lede">
+            The 198x family's build tools. Convert art and audio, pack data, and
+            master native disk and cartridge images that real hardware boots
+            &mdash; deterministic, dependency-light, native output only.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#install">Install the ADF tool</a>{' '}
+            <a class="button secondary" href="#tools">Browse the tools</a>{' '}
+            <a class="button secondary" href="https://github.com/build198x">GitHub</a>
+          </div>
+        </div>
+
+        <div class="terminal" aria-label="Example build198x-adf session">
+          <div class="terminal-bar" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <pre><code><span class="c">$</span> cargo install build198x-adf
+
+<span class="c">$</span> build198x-adf create game.adf \
+    --add game=c/game --startup game
+<span class="o">game.adf: created &mdash; 880K OFS "Game", 2 files, bootable</span>
+
+<span class="c">$</span> build198x-adf verify game.adf
+<span class="o">game.adf: OK &mdash; 880K OFS "Game"</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools" class="container tools" aria-label="The tools">
+      <header class="section-head">
+        <p class="eyebrow">The tools</p>
+        <h2>Everything between authored source and a runnable artifact.</h2>
+        <p class="section-lede">
+          Not assembly (that's <a href="https://github.com/asm198x">Asm198x</a>),
+          not emulation (that's <a href="https://emu198x.github.io">Emu198x</a>)
+          &mdash; the conversion, packing, and mastering in between. Every tool
+          emits a <em>native</em> container real hardware and emulators load.
+        </p>
+      </header>
+
+      <div class="tool-grid">
+        {tools.map((tool) => (
+          <article class="tool">
+            <p class="eyebrow">{tool.kind}</p>
+            <h3><a href={tool.href}>{tool.name}</a></h3>
+            <p>{tool.blurb}</p>
+            <p class="install"><code>{tool.install}</code></p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="install" class="install-band">
+      <div class="container install-grid">
+        <div>
+          <p class="eyebrow">Install</p>
+          <h2>Start with the ADF tool.</h2>
+          <p>
+            <code>build198x-adf</code> installs from crates.io with no other
+            setup &mdash; a lean binary for mastering, building, verifying, and
+            inspecting Amiga floppies. The full <code>build198x</code> pipeline
+            ships as a prebuilt binary on GitHub Releases for every platform.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="https://crates.io/crates/build198x-adf">View on crates.io</a>{' '}
+            <a class="button secondary" href="https://github.com/build198x/build198x/releases">Pipeline releases</a>
+          </div>
+        </div>
+        <pre class="install-code"><code><span class="c"># the standalone ADF tool</span>
+cargo install build198x-adf
+
+<span class="c"># check it</span>
+build198x-adf --help
+build198x-adf info disk.adf</code></pre>
+      </div>
+    </section>
+
+    <section class="container principles" aria-label="How Build198x works">
+      <article>
+        <p class="eyebrow">Native output</p>
+        <h3>Real formats, never a bespoke one.</h3>
+        <p>
+          Build198x masters to native containers &mdash; <code>.prg</code>,
+          <code>.tap</code>, hunk, ADF &mdash; and hands off to Asm198x at the
+          program-framing boundary. Nothing here invents a format only these
+          tools understand.
+        </p>
+      </article>
+      <article>
+        <p class="eyebrow">Deterministic</p>
+        <h3>The same inputs make the same bytes.</h3>
+        <p>
+          Output is byte-stable across runs and platforms, so a mastered disk is
+          diffable, cacheable, and reproducible &mdash; the same on macOS, Linux,
+          and Windows.
+        </p>
+      </article>
+      <article>
+        <p class="eyebrow">For anyone</p>
+        <h3>Built for the curriculum, useful on its own.</h3>
+        <p>
+          The 198x curriculum is the first consumer, not the boundary. Each tool
+          stands alone as a general utility &mdash; install it and build a disk
+          without the rest of the family.
+        </p>
+      </article>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .hero {
+    border-bottom: 1px solid var(--line);
+    background:
+      linear-gradient(135deg, rgba(11, 110, 105, 0.11), transparent 42%),
+      var(--paper);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap: 4rem;
+    align-items: center;
+    padding-block: 4.5rem;
+  }
+
+  h1 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(3.5rem, 11vw, 8rem);
+    line-height: 0.86;
+  }
+
+  .lede {
+    max-width: 640px;
+    margin: 1.4rem 0 0;
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    line-height: 1.48;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    padding: 0 1rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .secondary {
+    background: var(--panel);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .primary:hover {
+      background: var(--accent-strong);
+      color: white;
+    }
+    .secondary:hover {
+      color: var(--accent-strong);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+  }
+
+  /* Terminal panel */
+  .terminal {
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--code-bg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .terminal-bar {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .terminal-bar span {
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .terminal pre {
+    margin: 0;
+    padding: 1.25rem 1.35rem;
+    background: transparent;
+    box-shadow: none;
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .terminal .c {
+    color: #6f7c8a;
+  }
+
+  .terminal .o {
+    color: #5fd0a6;
+  }
+
+  /* Sections */
+  .section-head {
+    max-width: 720px;
+    padding-top: 4.5rem;
+  }
+
+  .section-head h2,
+  .install-grid h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    line-height: 1.1;
+  }
+
+  .section-lede {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 2.25rem;
+  }
+
+  .tool {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    background: var(--panel);
+    box-shadow: inset 0 0 0 1px var(--line), var(--shadow-sm);
+  }
+
+  .tool h3 {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+  }
+
+  .tool h3 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .tool h3 a:hover {
+    color: var(--signal);
+  }
+
+  .tool p {
+    margin: 0;
+    font-size: 0.96rem;
+    line-height: 1.55;
+  }
+
+  .tool .install {
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  .tool .install code {
+    font-size: 0.85rem;
+    color: var(--accent-strong);
+  }
+
+  .install-band {
+    margin-top: 4.5rem;
+    border-block: 1px solid var(--line);
+    padding-block: 4rem;
+    background: var(--paper-strong);
+  }
+
+  .install-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.85fr);
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .install-grid p {
+    margin: 1rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
+
+  .install-grid p code {
+    color: var(--accent-strong);
+  }
+
+  .install-code {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .install-code code {
+    color: var(--code-ink);
+  }
+
+  .install-code .c {
+    color: #6f7c8a;
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2.5rem;
+    padding-block: 4.5rem;
+  }
+
+  .principles h3 {
+    margin: 0 0 0.6rem;
+    color: var(--ink);
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .principles p {
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .principles p code,
+  .install-grid p code,
+  .section-lede code {
+    font-size: 0.9em;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid,
+    .install-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .hero-grid {
+      padding-block: 3rem;
+    }
+  }
+</style>
