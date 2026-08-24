@@ -19,9 +19,11 @@
   --line: var(--h-line);
   --line-strong: var(--h-line-soft);
   --accent: var(--h-accent);
-  --accent-strong: var(--h-accent-deep);
+  /* The accent that is readable on the current theme's ground. The kit
+   * swaps it; this site used to carry its own copy of that swap. */
+  --accent-strong: var(--h-accent-ink);
   --accent-soft: color-mix(in oklab, var(--h-accent) 12%, var(--h-page));
-  --signal: var(--h-accent-deep);
+  --signal: var(--h-accent-ink);
   --code-bg: var(--h-code-bg);
   --code-ink: var(--h-code-ink);
   --shadow-sm: 0 1px 2px rgba(58, 44, 31, 0.08);
@@ -40,58 +42,13 @@
   --ink-on-accent: #ffffff;
 }
 
-/* Ambient ground tint — 198x/decisions/family-visual-identity.md §3b.
- *
- * The project colour under everything, at the record's ceiling: 5% in light,
- * 20% in dark. It is not attached to any object, so it says "which site" without
- * entering the vocabulary that means "which machine". The light ceiling is what
- * keeps the tinted ground lighter than --h-surface-light (#f5e2d8), which is the
- * surface every ink is derived against — so the tint costs nothing in contrast.
- *
- * These override the kit's own grounds rather than the site's --paper/--panel,
- * because the shared nav and family strip paint from --h-page and --h-ground
- * directly; tinting only the site's aliases would leave a seam at the header.
- *
- * The base values are copied from tokens.css, which is the one thing wrong with
- * this: it is a hand-maintained copy of a kit value. If the tint is kept, the
- * mechanism belongs in tokens.css, where the ceiling can be fixed by
- * construction instead of by each site remembering it. */
-:root {
-  --h-page:   color-mix(in oklab, var(--h-project-build) 5%, #fdfcf7);
-  --h-ground: color-mix(in oklab, var(--h-project-build) 5%, #f4f1e8);
-}
-
+/* White holds on the light-mode accent fill at 5.11:1; on the brightened
+ * dark-mode accent it is 3.10:1, where the page ink gives 5.75:1. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --h-page:   color-mix(in oklab, var(--h-project-build) 20%, #1a1714);
-    --h-ground: color-mix(in oklab, var(--h-project-build) 20%, #221d16);
-  }
+  :root:not([data-theme="light"]) { --ink-on-accent: var(--h-page); }
 }
 
-:root[data-theme="dark"] {
-  --h-page:   color-mix(in oklab, var(--h-project-build) 20%, #1a1714);
-  --h-ground: color-mix(in oklab, var(--h-project-build) 20%, #221d16);
-}
-
-/* --h-accent-deep is the accent darkened for a light ground; on a dark one it
- * is the wrong end of the pair, and accent text set in it fails AA. The tokens
- * brighten --h-accent for dark mode, so the "strong" role swaps to that.
- * Both selectors are needed: the media query covers viewers who have expressed
- * no preference, the attribute covers an explicit choice if this site grows the
- * toggle the family palette already supports. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --accent-strong: var(--h-accent);
-    --signal: var(--h-accent);
-    --ink-on-accent: var(--h-page);
-  }
-}
-
-:root[data-theme="dark"] {
-  --accent-strong: var(--h-accent);
-  --signal: var(--h-accent);
-  --ink-on-accent: var(--h-page);
-}
+:root[data-theme="dark"] { --ink-on-accent: var(--h-page); }
 
 * {
   box-sizing: border-box;
