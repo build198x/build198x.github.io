@@ -1,63 +1,74 @@
 ---
+/**
+ * The family strip is shared and its wording is fixed by
+ * 198x/decisions/sibling-cross-promotion.md — siblings as peers, the hub
+ * linked, each name pointing at that project's own site where it has one and
+ * its GitHub org where it does not.
+ *
+ * The list omits Build198x: pointing a reader at the site they are already on
+ * is noise, and the strip exists to show them the rest of the family.
+ */
+import FamilyStrip from '@198x-ui/components/FamilyStrip.astro';
+
+const siblings = [
+  { name: 'Code198x', href: 'https://code198x.com' },
+  { name: 'Emu198x', href: 'https://emu198x.github.io' },
+  { name: 'Asm198x', href: 'https://asm198x.github.io' },
+  { name: 'Cat198x', href: 'https://github.com/cat198x' },
+];
+
 const year = 2026;
 ---
 
 <footer class="site-footer">
-  <div class="container footer-inner">
-    <p>
-      Build198x is part of the 198x family. The emulator is <a href="https://emu198x.github.io">Emu198x</a>;
-      the teaching site is <a href="https://code198x.com">Code Like It's 198x</a>.
-    </p>
-    <a href="https://github.com/build198x">GitHub</a>
-  </div>
-  <div class="container legal">
+  <FamilyStrip siblings={siblings} />
+  <div class="legal">
     <span>© {year} · GPL-2.0-or-later</span>
+    <a href="https://github.com/build198x">GitHub</a>
   </div>
 </footer>
 
 <style>
   .site-footer {
     margin-top: 5rem;
-    border-top: 1px solid var(--line);
-    padding: 2rem 0 calc(2rem + env(safe-area-inset-bottom));
-    background: var(--paper-strong);
+    background: var(--h-ground);
   }
 
-  .footer-inner {
+  .legal {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-  }
-
-  p {
-    max-width: 720px;
-    margin: 0;
-    font-size: 0.94rem;
-  }
-
-  .footer-inner > a {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
-    color: var(--ink);
-    font-weight: 650;
-  }
-
-  p a {
-    font-weight: 650;
-  }
-
-  .legal {
-    margin-top: 0.5rem;
+    /* Same inset the shared strip uses, so the two rows agree. */
+    padding: 0 var(--h-inset) calc(1rem + env(safe-area-inset-bottom));
     color: var(--ink-soft);
     font-size: 0.82rem;
   }
 
-  @media (max-width: 680px) {
-    .footer-inner {
-      align-items: flex-start;
+  .legal a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: var(--ink-muted);
+    text-decoration: none;
+    text-underline-offset: 0.18em;
+  }
+
+  .legal a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  .legal a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 40rem) {
+    .legal {
       flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
     }
   }
 </style>

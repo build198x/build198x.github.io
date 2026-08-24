@@ -153,7 +153,7 @@ build198x-adf info disk.adf</code></pre>
   .hero {
     border-bottom: 1px solid var(--line);
     background:
-      linear-gradient(135deg, rgba(11, 110, 105, 0.11), transparent 42%),
+      linear-gradient(135deg, color-mix(in oklab, var(--h-accent) 12%, transparent), transparent 42%),
       var(--paper);
   }
 
@@ -199,7 +199,7 @@ build198x-adf info disk.adf</code></pre>
 
   .primary {
     background: var(--accent);
-    color: white;
+    color: var(--ink-on-accent);
   }
 
   .secondary {
@@ -211,7 +211,7 @@ build198x-adf info disk.adf</code></pre>
   @media (hover: hover) and (pointer: fine) {
     .primary:hover {
       background: var(--accent-strong);
-      color: white;
+      color: var(--ink-on-accent);
     }
     .secondary:hover {
       color: var(--accent-strong);
@@ -252,7 +252,10 @@ build198x-adf info disk.adf</code></pre>
   }
 
   .terminal .c {
-    color: #6f7c8a;
+    /* Warm grey rather than the old slate: 5.07:1 on --h-code-bg and 6.03:1
+       on its dark-mode value, so the comments in these samples clear AA on
+       both. #6f7c8a measured 3.80:1 on the light-mode code ground. */
+    color: #9a8f78;
   }
 
   .terminal .o {
@@ -361,7 +364,10 @@ build198x-adf info disk.adf</code></pre>
   }
 
   .install-code .c {
-    color: #6f7c8a;
+    /* Warm grey rather than the old slate: 5.07:1 on --h-code-bg and 6.03:1
+       on its dark-mode value, so the comments in these samples clear AA on
+       both. #6f7c8a measured 3.80:1 on the light-mode code ground. */
+    color: #9a8f78;
   }
 
   .principles {
