@@ -7,7 +7,7 @@ const tools = [
     kind: 'Pipeline CLI',
     blurb:
       'One tool from authored assets to machine-ready data: convert PNGs to Spectrum SCREEN$, C64 Koala and Art Studio, and Amiga ILBM; render beeper phrases; master bootable disks.',
-    install: 'Prebuilt binary on GitHub Releases',
+    install: 'brew install build198x/tap/build198x',
     href: 'https://github.com/build198x/build198x',
   },
   {
@@ -15,7 +15,7 @@ const tools = [
     kind: 'Standalone ADF tool',
     blurb:
       'Master a hunk executable into a bootable Amiga floppy, build arbitrary OFS/FFS volumes, verify a disk’s integrity, and inspect its contents — the ADF half of the pipeline, on its own.',
-    install: 'cargo install build198x-adf',
+    install: 'brew install build198x/tap/build198x-adf',
     href: 'https://crates.io/crates/build198x-adf',
   },
   {
@@ -45,7 +45,7 @@ const tools = [
             &mdash; deterministic, dependency-light, native output only.
           </p>
           <div class="actions">
-            <a class="button primary" href="#install">Install the ADF tool</a>{' '}
+            <a class="button primary" href="#install">Install the tools</a>{' '}
             <a class="button secondary" href="#tools">Browse the tools</a>{' '}
             <a class="button secondary" href="https://github.com/build198x">GitHub</a>
           </div>
@@ -55,7 +55,7 @@ const tools = [
           <div class="terminal-bar" aria-hidden="true">
             <span></span><span></span><span></span>
           </div>
-          <pre><code><span class="c">$</span> cargo install build198x-adf
+          <pre><code><span class="c">$</span> brew install build198x/tap/build198x-adf
 
 <span class="c">$</span> build198x-adf create game.adf \
     --add game=c/game --startup game
@@ -95,24 +95,29 @@ const tools = [
       <div class="container install-grid">
         <div>
           <p class="eyebrow">Install</p>
-          <h2>Start with the ADF tool.</h2>
+          <h2>Install the tools you need.</h2>
           <p>
-            <code>build198x-adf</code> installs from crates.io with no other
-            setup &mdash; a lean binary for mastering, building, verifying, and
-            inspecting Amiga floppies. The full <code>build198x</code> pipeline
-            ships as a prebuilt binary on GitHub Releases for every platform.
+            Install the full <code>build198x</code> pipeline or the standalone{' '}
+            <code>build198x-adf</code> tool with Homebrew on macOS (Apple silicon
+            or Intel) and Linux (ARM64 or x86-64). Both also have prebuilt
+            archives, including Windows x86-64. No Rust toolchain is needed.
+          </p>
+          <p>
+            If you already use Rust, the standalone tool is also available
+            with <code>cargo install build198x-adf</code>.
           </p>
           <div class="actions">
-            <a class="button primary" href="https://crates.io/crates/build198x-adf">View on crates.io</a>{' '}
-            <a class="button secondary" href="https://github.com/build198x/build198x/releases">Pipeline releases</a>
+            <a class="button primary" href="https://github.com/build198x/build198x/releases/tag/build198x-v0.2.10">Pipeline downloads</a>{' '}
+            <a class="button secondary" href="https://github.com/build198x/build198x/releases/tag/build198x-adf-v0.2.10">ADF downloads</a>
           </div>
         </div>
-        <pre class="install-code"><code><span class="c"># the standalone ADF tool</span>
-cargo install build198x-adf
+        <pre class="install-code" tabindex="0"><code><span class="c"># the full pipeline</span>
+brew install build198x/tap/build198x
+build198x --version
 
-<span class="c"># check it</span>
-build198x-adf --help
-build198x-adf info disk.adf</code></pre>
+<span class="c"># or just the standalone ADF tool</span>
+brew install build198x/tap/build198x-adf
+build198x-adf --help</code></pre>
       </div>
     </section>
 
